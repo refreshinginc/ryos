@@ -17,57 +17,57 @@ const ryos = {
                 throw new Error("Invalid redirect URL.");
             }
 
+            if (!domain || typeof domain !== "string" || !this.isValidDomain(domain)) {
+                throw new Error("Invalid domain.");
+            }
+
             const formattedScope = scope.join("_");
             const authUrl = `https://ryos.org?domain=${encodeURIComponent(domain)}&scope=${encodeURIComponent(formattedScope)}&redirect=${encodeURIComponent(redirect)}`;
             window.location.href = authUrl;
         } catch (error) {
             console.error("Error during authentication:", error);
-            alert("There was an error with the authentication process. Please check your inputs and try again.");
         }
     },
 
     logout: function() {
-         document.cookie = "ryos=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; SameSite=Strict";
+        this.deleteCookie("ryos");
         console.log("Logged out, token removed.");
     },
 
-check: function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("ryos");
-    if (code) {
-        console.log("Found ryos code");
-        return code;
-    } else {
-        console.warn("No ryos param found in the current URL.");
-        return null;
-    }
-},
+    deleteCookie: function(name) {
+        document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; SameSite=Strict`;
+    },
 
-validate: async function(code) {
-    try {
-        const response = await fetch("https://ryos.org/validate", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({code}),
-        });
-
-        if (!response.ok) {
-            return false;
-        }
-
-        const result = await response.json();
-
-        if (result && result.success) {
-            return true;
+    check: function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = decodeURIComponent(urlParams.get("ryos"));
+        if (code) {
+            console.log("Found ryos code");
+            return code;
         } else {
+            console.warn("No ryos param found in the current URL.");
+            return null;
+        }
+    },
+
+    validate: async function(code) {
+        try {
+            const response = await fetch("https://ryos.org/validate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ code }),
+            });
+
+            if (!response.ok) return false;
+
+            const result = await response.json();
+            return result.success || false;
+        } catch (error) {
             return false;
         }
-    } catch (error) {
-        return false;
-    }
-},
+    },
 
     scopes: function() {
         return [
@@ -77,6 +77,11 @@ validate: async function(code) {
             },
         ];
     },
+
+    isValidDomain: function(domain) {
+        const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return domainRegex.test(domain);
+    }
 };
 
 if (typeof window !== "undefined") {
