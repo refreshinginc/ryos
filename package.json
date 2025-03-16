@@ -1,0 +1,17 @@
+{
+  "name": "ryos",
+  "version": "1.0.0",
+  "description": "The Official SDK for integrating RYOS authentication",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/refreshinginc/ryos.git"
+  },
+  "keywords": ["auth", "sdk", "ryos", "authentication"],
+  "author": "Refreshing",
+  "license": "MIT"
+}
