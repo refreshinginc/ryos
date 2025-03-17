@@ -1,4 +1,4 @@
-# ✨ RYOS Official SDK ✨
+# RYOS Official SDK ✨
 
 The Official RYOS Authentication SDK.
 
