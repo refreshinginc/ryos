@@ -1,17 +1,21 @@
 name: Publish to NPM
+
 on:
   push:
     branches:
-      - "*"
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
@@ -24,9 +28,9 @@ jobs:
           npm version minor -m "Bump version to %s"
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add .
-          git commit -m "Bump version and update lockfile"
-          git push
+          git add package*.json
+          git commit -m "Bump version and update package.json"
+          git push origin HEAD:main
 
       - name: Publish to NPM
         run: npm publish
