@@ -3,7 +3,7 @@ name: Publish to NPM
 on:
   push:
     branches:
-      - main
+      - main # Or your default branch
 
 jobs:
   build:
@@ -22,6 +22,18 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Commit package-lock.json if changed
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          if git diff --quiet package-lock.json; then
+            echo "No package-lock.json changes."
+          else
+            git add package-lock.json
+            git commit -m "Update package-lock.json"
+            git push origin HEAD:main
+          fi
 
       - name: Bump version and commit changes
         run: |
