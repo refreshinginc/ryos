@@ -10,14 +10,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
-      - name: Setup Node
+      - name: Setup
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
+      - name: Instal
         run: npm install
+
+      - name: Clean
+        run: |
+          git add .
+          git commit -m "Committing changes before version bump" || echo "No changes to commit"
 
       - name: Publish
         run: |
