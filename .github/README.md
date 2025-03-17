@@ -16,7 +16,7 @@ const ryos = require("ryos")
 
 ### Auth
 
-`ryos.auth(domain, scopes, redirect)` [Usage](#authenticating-a-user) | [Scopes](#-available-scopes)
+`ryos.auth(domain, scopes, redirect)` [Example](#authenticating-a-user) | [Scopes](#-available-scopes)
 
 Initiates the authentication process and redirects the user to the official RYOS authentication domain (`ryos.org`).
 
@@ -26,9 +26,16 @@ Initiates the authentication process and redirects the user to the official RYOS
 
 - Returns (void): This method initiates the authentication process and redirects the user to the RYOS authentication domain. No value is returned as the process is handled via the redirect.
 
+### Check
+`ryos.check()`
+
+Checks the current URL for the `ryos` query parameter, extracts the code, and returns it if found.
+
+- Returns (String | null): Returns the RYOS code if found, otherwise `null`.
+
 ### Validate
 
-`ryos.validate()` [Usage](#validating-codes)
+`ryos.validate()` [Example](#validating-codes)
 
 Checks if the current URL contains the `ryos` query, grabs the auth code, validates code, resolves code to a session token and stores to a secure cookie.
 
@@ -36,7 +43,7 @@ Checks if the current URL contains the `ryos` query, grabs the auth code, valida
 
 ### Logout
 
-`ryos.logout()` [Usage](#logging-out)
+`ryos.logout()` [Example](#logging-out)
 
 Logs the user out by removing the authentication token stored in the cookie.
 
@@ -54,20 +61,44 @@ const ryos = require("ryos");
 ryos.auth("example.com", ["identity"], "https://example.com/authorized");
 ```
 
+### Check for RYOS Code
+Checks the current URL for the `ryos` query parameter, extracts the code, and returns it if found:
+```js
+// Import the RYOS SDK
+const ryos = require("ryos");
+
+// Check for the RYOS auth code in the URL
+const foundCode = ryos.check();
+
+if (foundCode) {
+console.log("RYOS code found in current URL");
+}
+```
+
 ### Validating Codes
 After a user logs in and has been redirected back to your specified redirect url, you can call ryos.validate() to check for a ryos code in the url query, and validate it:
 ```js
 // Import the RYOS SDK
 const ryos = require("ryos");
 
-// Check the current URL for a RYOS auth code, validate it, and have it resolve with a session token to a secure cookie
+// Check the current URL for a RYOS auth code
+const foundCode = ryos.check();
+
+// If no code is found, log and exit early
+if (!foundCode) {
+    console.log("Auth code not found in URL.");
+    return;
+}
+
+// Validate the found auth code and check the result
 ryos.validate(foundCode).then(isValidated => {
-    // Check if auth code was found, validated and resolved to a session token stored in secure cookie
     if (isValidated) {
         console.log("Session token saved to cookie.");
     } else {
-        console.log("Auth code not found, is invalid or expired.");
+        console.log("Auth code is invalid or expired.");
     }
+}).catch(error => {
+    console.error("Error during validation:", error);
 });
 ```
 
