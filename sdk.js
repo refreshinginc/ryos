@@ -8,6 +8,7 @@ const ryos = {
 
             const availableScopes = this.scopes().map(s => s.name);
             const invalidScopes = scope.filter(s => !availableScopes.includes(s));
+            const isValidDomain = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(domain);
 
             if (invalidScopes.length > 0) {
                 throw new Error(`Invalid scopes: ${invalidScopes.join(", ")}`);
@@ -17,7 +18,7 @@ const ryos = {
                 throw new Error("Invalid redirect URL.");
             }
 
-            if (!domain || typeof domain !== "string" || !this.isValidDomain(domain)) {
+            if (!domain || typeof domain !== "string" || !isValidDomain) {
                 throw new Error("Invalid domain.");
             }
 
@@ -30,12 +31,8 @@ const ryos = {
     },
 
     logout: function() {
-        this.deleteCookie("ryos");
-        console.log("Logged out, token removed.");
-    },
-
-    deleteCookie: function(name) {
         document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; SameSite=Strict`;
+        console.log("Logged out, token removed.");
     },
 
     check: function() {
@@ -77,11 +74,6 @@ const ryos = {
             },
         ];
     },
-
-    isValidDomain: function(domain) {
-        const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        return domainRegex.test(domain);
-    }
 };
 
 if (typeof window !== "undefined") {
