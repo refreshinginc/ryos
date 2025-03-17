@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
+
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
@@ -21,14 +21,14 @@ jobs:
 
       - name: Bump version and commit changes
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
           npm version minor -m "Bump version to %s"
-          git add package.json package-lock.json
-          git commit -m "Bump version to %s"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "Bump version and update lockfile"
           git push
 
-      - name: Publish
+      - name: Publish to NPM
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm }}
