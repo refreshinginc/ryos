@@ -16,13 +16,13 @@ jobs:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Instal
+      - name: Install
         run: npm install
 
-      - name: Clean
+      - name: Commit
         run: |
-          git add .
-          git commit -m "Committing changes before version bump" || echo "No changes to commit"
+          git add package.json package-lock.json
+          git commit -m "Update package-lock.json and package.json" || echo "No changes to commit"
 
       - name: Publish
         run: |
