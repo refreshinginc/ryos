@@ -12,6 +12,9 @@
     "url": "https://github.com/refreshinginc/ryos.git"
   },
   "keywords": ["auth", "sdk", "ryos", "authentication"],
-  "author": "Refreshing",
+  "author": {
+    "name": "Refreshing",
+    "email": "support@refreshing.cc"
+  },
   "license": "MIT"
 }
