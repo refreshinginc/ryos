@@ -32,8 +32,24 @@ jobs:
           else
             git add package-lock.json
             git commit -m "Update package-lock.json"
-            git push origin HEAD:main
+            git push https://github.com/refreshinginc/ryos.git HEAD:main
           fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit package.json if changed
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          if git diff --quiet package.json; then
+            echo "No package.json changes."
+          else
+            git add package.json
+            git commit -m "Update package.json"
+            git push https://github.com/refreshinginc/ryos.git HEAD:main
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump version and commit changes
         run: |
@@ -42,10 +58,11 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add package*.json
           git commit -m "Bump version and update package.json"
-          git push origin HEAD:main
+          git push https://github.com/refreshinginc/ryos.git HEAD:main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to NPM
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
