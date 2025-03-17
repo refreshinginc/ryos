@@ -61,7 +61,7 @@ const ryos = require("ryos");
 ryos.auth("example.com", ["identity"], "https://example.com/authorized");
 ```
 
-### Check for RYOS Code
+### Check for RYOS One-Time Code
 Checks the current URL for the `ryos` query parameter, extracts the code, and returns it if found:
 ```js
 // Import the RYOS SDK
@@ -75,7 +75,7 @@ console.log("RYOS code found in current URL");
 }
 ```
 
-### Validating Codes
+### Validating One-Time Codes
 After a user logs in and has been redirected back to your specified redirect url, you can call ryos.validate() to check for a ryos code in the url query, and validate it:
 ```js
 // Import the RYOS SDK
