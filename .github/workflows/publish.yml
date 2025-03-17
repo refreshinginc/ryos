@@ -3,7 +3,7 @@ name: Publish to NPM
 on:
   push:
     branches:
-      - main # Or your default branch
+      - main
 
 jobs:
   build:
@@ -48,3 +48,4 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
