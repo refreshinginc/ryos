@@ -51,9 +51,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Bump version and commit changes
+      - name: Show package.json before version bump
+        run: cat package.json
+
+      - name: Bump version and show output
         run: |
           npm version minor -m "Bump version to %s"
+          echo "npm version output:"
+          git status
+          cat package.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit version bump
+        run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add package*.json
