@@ -27,7 +27,7 @@ Initiates the authentication process and redirects the user to the official RYOS
 - Returns (void): This method initiates the authentication process and redirects the user to the RYOS authentication domain. No value is returned as the process is handled via the redirect.
 
 ### Check
-`ryos.check()` [Example](#check-for-ryos-code)
+`ryos.check()` [Example](#check-for-ryos-one-time-code)
 
 Checks the current URL for the `ryos` query parameter, extracts the code, and returns it if found.
 
@@ -35,7 +35,7 @@ Checks the current URL for the `ryos` query parameter, extracts the code, and re
 
 ### Validate
 
-`ryos.validate()` [Example](#validating-codes)
+`ryos.validate()` [Example](#validating-one-time-codes)
 
 Checks if the current URL contains the `ryos` query, grabs the auth code, validates code, resolves code to a session token and stores to a secure cookie.
 
