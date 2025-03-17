@@ -32,7 +32,7 @@ jobs:
           else
             git add package-lock.json
             git commit -m "Update package-lock.json"
-            git push https://github.com/refreshinginc/ryos.git HEAD:main
+            git push --force https://github.com/refreshinginc/ryos.git HEAD:main
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -46,7 +46,7 @@ jobs:
           else
             git add package.json
             git commit -m "Update package.json"
-            git push https://github.com/refreshinginc/ryos.git HEAD:main
+            git push --force https://github.com/refreshinginc/ryos.git HEAD:main
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -58,7 +58,7 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add package*.json
           git commit -m "Bump version and update package.json"
-          git push https://github.com/refreshinginc/ryos.git HEAD:main
+          git push --force https://github.com/refreshinginc/ryos.git HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
