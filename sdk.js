@@ -25,6 +25,7 @@
             const authUrl = `https://ryos.org?domain=${encodeURIComponent(domain)}&scope=${encodeURIComponent(
               formattedScope
             )}&redirect=${encodeURIComponent(redirect)}`;
+
             window.location.href = authUrl;
           } catch (error) {
             console.error("Error during authentication:", error);
