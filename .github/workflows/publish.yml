@@ -1,79 +1,19 @@
-name: Publish to NPM
+name: Publish
 
 on:
   push:
-    branches:
-      - main
+    branches: main
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
         with:
-          fetch-depth: 0
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
+          node-version: "20"
+      - run: npm ci
+      - run: npm test
+      - uses: JS-DevTools/npm-publish@v3
         with:
-          node-version: '14.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Commit package-lock.json if changed
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          if git diff --quiet package-lock.json; then
-            echo "No package-lock.json changes."
-          else
-            git add package-lock.json
-            git commit -m "Update package-lock.json"
-            git push --force https://github.com/refreshinginc/ryos.git HEAD:main
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Commit package.json if changed
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          if git diff --quiet package.json; then
-            echo "No package.json changes."
-          else
-            git add package.json
-            git commit -m "Update package.json"
-            git push --force https://github.com/refreshinginc/ryos.git HEAD:main
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Show package.json before version bump
-        run: cat package.json
-
-      - name: Bump version and show output
-        run: |
-          npm version minor -m "Bump version to %s"
-          echo "npm version output:"
-          git status
-          cat package.json
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Commit version bump
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add package*.json
-          git commit -m "Bump version and update package.json"
-          git push --force https://github.com/refreshinginc/ryos.git HEAD:main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish to NPM
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm }}
+          token: ${{ secrets.npm }}
