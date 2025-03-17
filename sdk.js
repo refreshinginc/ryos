@@ -41,7 +41,7 @@ const ryos = {
     check: function() {
         const urlParams = new URLSearchParams(window.location.search);
         const code = decodeURIComponent(urlParams.get("ryos"));
-        if (code.length>0) {
+        if (code != null) {
             console.log("Found ryos code");
             return code;
         } else {
