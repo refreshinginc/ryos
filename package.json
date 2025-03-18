@@ -1,6 +1,6 @@
 {
   "name": "ryos",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "The Official SDK for integrating RYOS authentication",
   "main": "sdk.js",
   "type": "module",
@@ -21,5 +21,11 @@
     "name": "Refreshing",
     "email": "support@refreshing.cc"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./sdk.js",
+      "require": "./sdk.js"
+    }
+  }
 }
