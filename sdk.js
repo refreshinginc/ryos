@@ -103,5 +103,8 @@ const ryos = {
 if (typeof window !== "undefined") {
   window.ryos = ryos;
 }
-
-export default ryos;
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = ryos;
+} else {
+  export default ryos;
+}
