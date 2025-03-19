@@ -1,6 +1,6 @@
 {
   "name": "ryos",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "The Official SDK for integrating RYOS authentication",
   "main": "sdk.js",
   "type": "module",
