@@ -1,18 +1,22 @@
-# RYOS Official SDK ✨
+# Refresh Your Online Security SDK ✨
 
-The Official RYOS Authentication SDK.
+The robust, secure, and lightweight **login and authentication solution** for your website or app.
 
-## 🟥 Installation 
+## 🟥 Installing
 
+### CDN
+For browser environments:
+```html
+<script type="module" src="https://cdn.jsdelivr.net/gh/refreshinginc/ryos/sdk.js" defer></script>
 ```
-npm install --save ryos
+
+### Package Manager
+For Node.js environments:
+```
+npm install ryos
 ```
 
 ## 🟧 API
-
-```js
-const ryos = require("ryos")
-```
 
 ### Auth
 
