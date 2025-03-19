@@ -4,14 +4,12 @@ The robust, secure, and lightweight **login and authentication solution** for yo
 
 ## 🟥 Installing
 
-### CDN
-For browser environments:
+### Browser Environments:
 ```html
 <script type="module" src="https://cdn.jsdelivr.net/gh/refreshinginc/ryos/sdk.js" defer></script>
 ```
 
-### Package Managers
-For Node.js environments:
+### Node.js Environments:
 ```
 npm install ryos
 
@@ -69,7 +67,7 @@ const ryos = require("ryos");
 ryos.auth("example.com", ["identity"], "https://example.com/authorized");
 ```
 
-### Check for RYOS One-Time Code
+### Check For RYOS One-Time Code
 Checks the current URL for the `ryos` query parameter, extracts the code, and returns it if found:
 ```js
 // Import the RYOS SDK
