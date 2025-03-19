@@ -10,10 +10,14 @@ For browser environments:
 <script type="module" src="https://cdn.jsdelivr.net/gh/refreshinginc/ryos/sdk.js" defer></script>
 ```
 
-### Package Manager
+### Package Managers
 For Node.js environments:
 ```
 npm install ryos
+
+or
+
+yarn add ryos
 ```
 
 ## 🟧 API
